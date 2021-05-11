@@ -14,7 +14,7 @@ namespace Homework_5_Array
             double[,] ConvolutionKernel = ReadImageDataFromFile(locationOfConvolutionKernel);
 
             double[,] repeatedTextureImport = new double[Import.GetLength(0)+2,Import.GetLength(1)+2];
-            for(int i =0;i < Import.GetLength(0); i++)
+            for(int i =0;i < Import.GetLength(0); i++)  //ส่วนตรงกลาง
             {
                 for(int j = 0; j < Import.GetLength(1); j++)
                 {
@@ -22,17 +22,18 @@ namespace Homework_5_Array
 
                 }
             }
-            for (int i = 0; i < Import.GetLength(0); i++)
+            for (int i = 0; i < Import.GetLength(0); i++)       //ส่วนแนวนอน
             {
                 repeatedTextureImport[Import.GetLength(0) + 1, i+1] = Import[0, i];
                 repeatedTextureImport[0, i+1] = Import[4, i];
+
             }
-            for (int i = 0; i < Import.GetLength(1); i++)
+            for (int i = 0; i < Import.GetLength(1); i++)           //ส่วนแนวตั้ง
             {
                 repeatedTextureImport[i+1, Import.GetLength(1) + 1] = Import[i, 0];
                 repeatedTextureImport[i+1, 0] = Import[i, 4];
             }
-            repeatedTextureImport[0,0] = Import[4,4];
+            repeatedTextureImport[0,0] = Import[4,4];           // ส่วนมุม
             repeatedTextureImport[0,6] = Import[4,0];
             repeatedTextureImport[6,0] = Import[0,4];
             repeatedTextureImport[6,6] = Import[0,0];
@@ -43,8 +44,8 @@ namespace Homework_5_Array
                 for (int j = 0; j < Import.GetLength(1); j++)
                 {
                     outputImageData[i, j] = repeatedTextureImport[i     , j  ] * ConvolutionKernel[1-1 , 1-1   ] +
-                                            repeatedTextureImport[i     , j+1] * ConvolutionKernel[1   , 1     ] +
-                                            repeatedTextureImport[i     , j+2] * ConvolutionKernel[1   , 1+1   ] +
+                                            repeatedTextureImport[i     , j+1] * ConvolutionKernel[1-1   , 1   ] +
+                                            repeatedTextureImport[i     , j+2] * ConvolutionKernel[1-1   , 1+1 ] +
                                             repeatedTextureImport[i+1   , j  ] * ConvolutionKernel[1   , 1-1   ] +
                                             repeatedTextureImport[i+1   , j+1] * ConvolutionKernel[1   , 1     ] + //centre
                                             repeatedTextureImport[i+1   , j+2] * ConvolutionKernel[1   , 1+1   ] +
